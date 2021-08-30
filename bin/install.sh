@@ -28,7 +28,7 @@ DB_PASSWORD='<your user password>'
 DELIM
 
 echo ":: Please add missing values to the configuration file."
-echo "   Path >>/etc/net.bazzline/zabbix/housekeeping/local_configuration.sh<<."
+echo "   Path >>${CONFIGURATION_FILE_PATH}<<."
 
 cat > /etc/net.bazzline/zabbix/housekeeping/housekeeping.sh<<DELIM
 #!/bin/bash
@@ -98,8 +98,8 @@ DELIM
 
 echo ":: Adding and enabling systemd files."
 cp /etc/net.bazzline/zabbix/housekeeping/zabbix-housekeeping.service /etc/systemd/system/zabbix-housekeeping.service
-cp /etc/net.bazzline/zabbix/housekeeping/zabbix-housekeeping.timer /etc/systemd/system/zabbix-housekeeping.timer
+cp /etc/net.bazzline/zabbix/housekeeping/weekly-zabbix-housekeeping.timer /etc/systemd/system/weekly-zabbix-housekeeping.timer
 
 systemctl daemon-reload
-systemctl enable zabbix-housekeeping.timer
+systemctl enable weekly-zabbix-housekeeping.timer
 #end of install routine

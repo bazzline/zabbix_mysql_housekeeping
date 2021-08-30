@@ -17,12 +17,12 @@ fi
 #end of check if we are root
 
 #begin of uninstall routine
-systemctl enable zabbix-housekeeping.timer
+systemctl disable weekly-zabbix-housekeeping.timer
 
 rm /etc/systemd/system/zabbix-housekeeping.service
-rm /etc/systemd/system/zabbix-housekeeping.timer
+rm /etc/systemd/system/weekly-zabbix-housekeeping.timer
 
-rm /etc/net.bazzline/zabbix/housekeeping/weekly-zabbix-housekeeping.service
+rm /etc/net.bazzline/zabbix/housekeeping/zabbix-housekeeping.service
 rm /etc/net.bazzline/zabbix/housekeeping/weekly-zabbix-housekeeping.timer
 rm /etc/net.bazzline/zabbix/housekeeping/housekeeping.sh
 
