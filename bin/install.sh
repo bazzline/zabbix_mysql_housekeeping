@@ -21,6 +21,11 @@ echo ":: Creating files."
 mkdir -p /etc/net.bazzline/zabbix/housekeeping
 
 cat > /etc/net.bazzline/zabbix/housekeeping/local_configuration.sh<<DELIM
+#!/bin/bash
+####
+# @author: https://github.com/bazzline/zabbix_mysql_housekeeping/blob/main/bin/install.sh
+####
+
 CURRENT_VERSION=1
 
 DB_USERNAME='<your user name>'
