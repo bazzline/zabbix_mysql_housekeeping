@@ -11,3 +11,33 @@ This script creates a timer that runs once a week and optimize the tables `zabbi
 
 The script comes with an [install](bin/install.sh)- and an [uninstall](bin/uninstall.sh) routine.
 All configurable values are configured in `/etc/net.bazzline/zabbix/housekeeping/local_configuration.sh`.
+
+## Installation
+
+```
+WORKING_DIRECTORY=$(pwd)
+TEMPORARY_DIRECTORY=$(mktemp -d)
+
+cd ${TEMPORARY_DIRECTORY}
+git clone https://github.com/bazzline/zabbix_mysql_housekeeping .
+sudo bash bin/install.sh
+
+cd ${WORKING_DIRECTORY}
+
+rm -fr ${TEMPORARY_DIRECTORY}
+```
+
+## Uninstallation
+
+```
+WORKING_DIRECTORY=$(pwd)
+TEMPORARY_DIRECTORY=$(mktemp -d)
+
+cd ${TEMPORARY_DIRECTORY}
+git clone https://github.com/bazzline/zabbix_mysql_housekeeping .
+sudo bash bin/uninstall.sh
+
+cd ${WORKING_DIRECTORY}
+
+rm -fr ${TEMPORARY_DIRECTORY}
+```
