@@ -4,6 +4,8 @@
 # @author: stev leibelt <artodeto@bazzline.net>
 ####
 #end of variables declaration
+CONFIGURATION_FILE_EXPECTED_VERSION=1
+CONFIGURATION_FILE_PATH="/etc/net.bazzline/zabbix/housekeeping/local_configuration.sh"
 WHO_AM_I=$(whoami)
 #end of variables declaration
 
@@ -33,7 +35,7 @@ DB_PASSWORD='<your user password>'
 DELIM
 
 echo ":: Please add missing values to the configuration file."
-echo "   Path >>\${CONFIGURATION_FILE_PATH}<<."
+echo "   Path >>${CONFIGURATION_FILE_PATH}<<."
 
 cat > /etc/net.bazzline/zabbix/housekeeping/housekeeping.sh<<DELIM
 #!/bin/bash
@@ -44,17 +46,14 @@ cat > /etc/net.bazzline/zabbix/housekeeping/housekeeping.sh<<DELIM
 
 logger -i -p cron.debug "bo: maintenance."
 
-CONFIGURATION_FILE_PATH="/etc/net.bazzline/zabbix/housekeeping/local_configuration.sh"
-EXPECTED_VERSION=1
-
 if [[ -f \${CONFIGURATION_FILE_PATH} ]];
 then
     source \${CONFIGURATION_FILE_PATH}
     
-    if [[ \${CURRENT_VERSION} -ne \${EXPECTED_VERSION} ]];
+    if [[ \${CURRENT_VERSION} -ne \${CONFIGURATION_FILE_EXPECTED_VERSION} ]];
     then
         logger -i -p cron.crit ":: Configuration version is wrong."
-        logger -i -p cron.crit "   Expected >>\${EXPECTED_VERSION}<<, found >>\${CURRENT_VERSION}<<."
+        logger -i -p cron.crit "   Expected >>\${CONFIGURATION_FILE_EXPECTED_VERSION}<<, found >>\${CURRENT_VERSION}<<."
         
         exit 2
     fi
