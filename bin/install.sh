@@ -22,6 +22,7 @@ fi
 echo ":: Creating files."
 mkdir -p /etc/net.bazzline/zabbix/housekeeping
 
+#   begin of configuration file
 cat > /etc/net.bazzline/zabbix/housekeeping/local_configuration.sh<<DELIM
 #!/bin/bash
 ####
@@ -36,7 +37,9 @@ DELIM
 
 echo ":: Please add missing values to the configuration file."
 echo "   Path >>${CONFIGURATION_FILE_PATH}<<."
+#   end of configuration file
 
+#   begin of executable file
 cat > /etc/net.bazzline/zabbix/housekeeping/housekeeping.sh<<DELIM
 #!/bin/bash
 ####
@@ -73,6 +76,10 @@ mysqlcheck -u\${DB_USERNAME} -p\${DB_PASSWORD} --optimize zabbix history;
 logger -i -p cron.debug "eo: maintenance."
 DELIM
 
+chmod +x /etc/net.bazzline/zabbix/housekeeping/housekeeping.sh
+#   end of executable file
+
+#   begin of service file
 cat > /etc/net.bazzline/zabbix/housekeeping/zabbix-housekeeping.service<<DELIM
 [Unit]
 Description=net.bazzline zabbix housekeeping service
@@ -85,7 +92,10 @@ ExecStart=/etc/net.bazzline/zabbix/housekeeping/housekeeping.sh
 KillMode=process
 TimeoutStopSec=21600
 DELIM
+#   end of service file
 
+#   end of timer file
+#   begin of timer file
 cat > /etc/net.bazzline/zabbix/housekeeping/weekly-zabbix-housekeeping.timer<<DELIM
 [Unit]
 Description=Weekly zabbix mysql housekeeping
@@ -99,6 +109,7 @@ Unit=zabbix-housekeeping.service
 [Install]
 WantedBy=timers.target
 DELIM
+#   end of timer file
 
 echo ":: Adding and enabling systemd files."
 cp /etc/net.bazzline/zabbix/housekeeping/zabbix-housekeeping.service /etc/systemd/system/zabbix-housekeeping.service
