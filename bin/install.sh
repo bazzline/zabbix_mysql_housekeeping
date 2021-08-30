@@ -28,7 +28,7 @@ DB_PASSWORD='<your user password>'
 DELIM
 
 echo ":: Please add missing values to the configuration file."
-echo "   Path >>${CONFIGURATION_FILE_PATH}<<."
+echo "   Path >>\${CONFIGURATION_FILE_PATH}<<."
 
 cat > /etc/net.bazzline/zabbix/housekeeping/housekeeping.sh<<DELIM
 #!/bin/bash
@@ -42,29 +42,29 @@ logger -i -p cron.debug "bo: maintenance."
 CONFIGURATION_FILE_PATH="/etc/net.bazzline/zabbix/housekeeping/local_configuration.sh"
 EXPECTED_VERSION=1
 
-if [[ -f ${CONFIGURATION_FILE_PATH} ]];
+if [[ -f \${CONFIGURATION_FILE_PATH} ]];
 then
-    source ${CONFIGURATION_FILE_PATH}
+    source \${CONFIGURATION_FILE_PATH}
     
-    if [[ ${CURRENT_VERSION} -ne ${EXPECTED_VERSION} ]];
+    if [[ \${CURRENT_VERSION} -ne \${EXPECTED_VERSION} ]];
     then
         logger -i -p cron.crit ":: Configuration version is wrong."
-        logger -i -p cron.crit "   Expected >>${EXPECTED_VERSION}<<, found >>${CURRENT_VERSION}<<."
+        logger -i -p cron.crit "   Expected >>\${EXPECTED_VERSION}<<, found >>\${CURRENT_VERSION}<<."
         
         exit 2
     fi
 else
     logger -i -p cron.crit ":: Expected configuration file not found."
-    logger -i -p cron.crit "   >>${CONFIGURATION_FILE_PATH}<< is not a file."
+    logger -i -p cron.crit "   >>\${CONFIGURATION_FILE_PATH}<< is not a file."
     
     exit 1
 fi
 
 logger -i -p cron.notice "   Starting >>optimize<< for table >>zabbix.history_uint<<."
-mysqlcheck -u${DB_USERNAME} -p${DB_PASSWORD} --optimize zabbix history_uint;
+mysqlcheck -u\${DB_USERNAME} -p\${DB_PASSWORD} --optimize zabbix history_uint;
 
 logger -i -p cron.notice "   Starting >>optimize<< for table >>zabbix.history<<."
-mysqlcheck -u${DB_USERNAME} -p${DB_PASSWORD} --optimize zabbix history;
+mysqlcheck -u\${DB_USERNAME} -p\${DB_PASSWORD} --optimize zabbix history;
 
 logger -i -p cron.debug "eo: maintenance."
 DELIM
