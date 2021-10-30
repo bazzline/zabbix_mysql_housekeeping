@@ -23,6 +23,12 @@ echo ":: Creating files."
 mkdir -p /etc/net.bazzline/zabbix/housekeeping
 
 #   begin of configuration file
+echo ":: Please input your zabbix database user name."
+read DB_USERNAME
+
+echo ":: Please input your zabbix database user password."
+read DB_PASSWORD
+
 cat > /etc/net.bazzline/zabbix/housekeeping/local_configuration.sh<<DELIM
 #!/bin/bash
 ####
@@ -31,11 +37,11 @@ cat > /etc/net.bazzline/zabbix/housekeeping/local_configuration.sh<<DELIM
 
 CURRENT_VERSION=1
 
-DB_USERNAME='<your user name>'
-DB_PASSWORD='<your user password>'
+DB_USERNAME='${DB_USERNAME}'
+DB_PASSWORD='<${DB_PASSWORD}>'
 DELIM
 
-echo ":: Please add missing values to the configuration file."
+echo ":: Please check the configuration file."
 echo "   Path >>${CONFIGURATION_FILE_PATH}<<."
 #   end of configuration file
 
@@ -48,6 +54,9 @@ cat > /etc/net.bazzline/zabbix/housekeeping/housekeeping.sh<<DELIM
 ####
 
 logger -i -p cron.debug "bo: maintenance."
+
+CONFIGURATION_FILE_PATH='/etc/net.bazzline/zabbix/housekeeping/local_configuration.sh'
+CONFIGURATION_FILE_EXPECTED_VERSION=1
 
 if [[ -f \${CONFIGURATION_FILE_PATH} ]];
 then
