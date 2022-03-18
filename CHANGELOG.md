@@ -15,7 +15,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+### Changed
+
+## [0.1.0](https://github.com/bazzline/zabbix_mysql_housekeeping/tree/0.1.0) - 20220318
+
+### Added
+
 * install.sh
 * uninstall.sh
-
-### Changed
