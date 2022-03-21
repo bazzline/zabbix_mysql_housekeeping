@@ -10,9 +10,10 @@ WHO_AM_I=$(whoami)
 #begin of check if we are root
 if [[ ${WHO_AM_I} != "root" ]];
 then
-    echo ":: Script needs to be executed as root."
+    #call this script (${0}) again with sudo with all provided arguments (${@})
+    sudo "${0}" "${@}"
 
-    exit 1
+    exit ${?}
 fi
 #end of check if we are root
 

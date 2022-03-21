@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* replaced stopping of scripts with automatically elevating by prefixing with sudo if scripts are not started as root
+
 ## [0.1.0](https://github.com/bazzline/zabbix_mysql_housekeeping/tree/0.1.0) - 20220318
 
 ### Added
